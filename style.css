@@ -102,4 +102,54 @@ input[type="checkbox"] {
     bottom: 40%;
     right: 42%;
   }
+  .form-popup {
+    margin-right: 41%;
+    margin-top: -3%;
+  }
+}
+/************** POPUP FORM ********************/
+
+.form-popup {
+  display: none;
+  position: absolute;
+  opacity: 1;
+}
+
+
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+.form-container input[type=text]{
+  width: 100%;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+.form-container input[type=text]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+.form-container #btn-cancel {
+  background-color: rgb(71, 61, 61);
+}
+
+.form-container .btn:hover{
+  opacity: 1;
 }
