@@ -22,6 +22,13 @@ body {
   color: white;
   height: 100vh;
 }
+.container {
+  opacity: 0.7;
+  background-color: black;
+  z-index: 5;
+  padding: 1rem;
+  border-radius: 1rem;
+}
 main {
   display: flex;
   flex-direction: column;
@@ -93,6 +100,6 @@ input[type="checkbox"] {
   #btn-add {
     position: absolute;
     bottom: 40%;
-    right: 40%;
+    right: 42%;
   }
 }
