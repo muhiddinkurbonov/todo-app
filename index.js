@@ -1,4 +1,5 @@
-import todos from "./todos.js";
+// import todos from "./todos.js";
+// const original = todos;
 const btnAdd = document.getElementById("btn-add");
 const btnCancel = document.getElementById("btn-cancel");
 const itemForm = document.getElementById("item-form");
@@ -10,6 +11,10 @@ const incompleteSection = document.getElementById("incomplete-section");
 const completeSection = document.getElementById("complete-section");
 
 const form = document.querySelector(".form-container");
+
+let todosArray = localStorage.getItem("todos")
+  ? JSON.parse(localStorage.getItem("todos"))
+  : [];
 
 function openItemForm() {
   itemForm.style.display = "block";
@@ -49,8 +54,21 @@ function createTodoHtml(item, category, completed) {
 
 function handleItem(event) {
   event.preventDefault();
+  const todos = localStorage.getItem("todos");
+  console.log(typeof todos);
   const itemValue = itemInput.value;
   const categoryValue = categoryInput.value;
+  const newTodoId = todos ? length + 1 : 1;
+  const newTodo = {
+    id: newTodoId,
+    todo: itemValue,
+    category: categoryValue,
+    completed: false,
+  };
+  console.log(newTodo);
+  todosArray.push(newTodo);
+  console.log(todosArray);
+  localStorage.setItem('todos', JSON.stringify(todosArray))
   createTodoHtml(itemValue, categoryValue, false);
   itemInput.value = "";
   categoryInput.value = "";
@@ -58,10 +76,9 @@ function handleItem(event) {
 }
 
 function showTodos() {
-  todos.forEach((item) => {
-    createTodoHtml(item.todo, item.category, item.completed);
-  });
-  console.log(todos);
+    todosArray.forEach((item) => {
+      createTodoHtml(item.todo, item.category, item.completed);
+    });
 }
 showTodos();
 btnAdd.addEventListener("click", openItemForm);
