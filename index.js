@@ -7,7 +7,9 @@ const categoryInput = document.getElementById("category-input");
 
 const btnSubmit = document.getElementById("btn-submit");
 
-const incompleteSection = document.getElementById('incomplete-section')
+const incompleteSection = document.getElementById("incomplete-section");
+
+const form = document.querySelector(".form-container");
 
 function openItemForm() {
   itemForm.style.display = "block";
@@ -16,9 +18,6 @@ function openItemForm() {
 function closeItemForm() {
   itemForm.style.display = "none";
 }
-
-btnAdd.addEventListener("click", openItemForm);
-btnCancel.addEventListener("click", closeItemForm);
 
 function createTodoHtml(item, cat) {
   const todo = document.createElement("div");
@@ -39,7 +38,7 @@ function createTodoHtml(item, cat) {
   description.appendChild(itemName);
   description.appendChild(itemCategory);
   todo.appendChild(description);
-  incompleteSection.appendChild(todo)
+  incompleteSection.appendChild(todo);
 }
 
 function handleItem(event) {
@@ -49,7 +48,9 @@ function handleItem(event) {
   createTodoHtml(itemValue, categoryValue);
   itemInput.value = "";
   categoryInput.value = "";
-  closeItemForm()
+  closeItemForm();
 }
 
-btnSubmit.addEventListener("click", handleItem);
+btnAdd.addEventListener("click", openItemForm);
+btnCancel.addEventListener("click", closeItemForm);
+form.addEventListener("submit", handleItem);

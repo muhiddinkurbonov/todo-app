@@ -45,21 +45,31 @@ header {
 #status-overall {
   margin: 1rem 0;
 }
+
 section {
   margin: 1rem 0;
 }
+
 .todo {
   display: flex;
   gap: 1rem;
   margin: 1rem 0;
 }
+
 input[type="checkbox"] {
   align-self: flex-start;
 }
+
 .category {
   font-size: 0.8rem;
   color: rgb(10, 186, 240);
 }
+
+.description {
+  padding: 0;
+  align-self: flex-start;
+}
+
 #btn-add {
   font-size: 2rem;
   width: fit-content;
@@ -73,10 +83,13 @@ input[type="checkbox"] {
   right: 1rem;
   cursor: pointer;
   transition: all 0.4s;
+  position: absolute;
 }
+
 #btn-add:hover {
   background-color: rgb(11, 101, 192);
 }
+
 @media only screen and (min-width: 780px) {
   body {
     display: flex;
@@ -86,26 +99,15 @@ input[type="checkbox"] {
   .container {
     width: min(100%, 350px);
     margin: 2rem;
+    position: relative;
   }
-  p {
-    font-size: 1.4rem;
+  .description {
+    font-size: 1.2rem;
   }
   .category {
     font-size: 1rem;
   }
-  input[type="checkbox"] {
-    width: 2rem;
-    height: 2rem;
-  }
-  #btn-add {
-    position: absolute;
-    bottom: 40%;
-    right: 42%;
-  }
-  .form-popup {
-    margin-right: 41%;
-    margin-top: -3%;
-  }
+
 }
 /************** POPUP FORM ********************/
 
@@ -116,7 +118,7 @@ input[type="checkbox"] {
 }
 
 .form-container {
-  max-width: 300px;
+  width: 90%;
   padding: 10px;
   background-color: black;
   border: 2px solid rgb(169, 170, 172);
@@ -144,7 +146,7 @@ input[type="checkbox"] {
 .form-container .btn {
   background-color: #057c50;
   color: white;
-  padding: 16px 20px;
+  padding: 1rem;
   border: none;
   cursor: pointer;
   width: 100%;
@@ -159,4 +161,9 @@ input[type="checkbox"] {
 
 .form-container .btn:hover {
   opacity: 1;
+}
+
+.btnSC {
+  display: flex;
+  gap: 0.5rem;
 }
