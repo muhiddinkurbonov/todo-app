@@ -75,7 +75,7 @@ input[type="checkbox"] {
   transition: all 0.4s;
 }
 #btn-add:hover {
-    background-color: rgb(11, 101, 192);
+  background-color: rgb(11, 101, 192);
 }
 @media only screen and (min-width: 780px) {
   body {
@@ -115,41 +115,48 @@ input[type="checkbox"] {
   opacity: 1;
 }
 
-
 .form-container {
   max-width: 300px;
   padding: 10px;
-  background-color: white;
+  background-color: black;
+  border: 2px solid rgb(169, 170, 172);
+  border-radius: 1rem;
+}
+.form-container h2 {
+  margin-bottom: 0.5rem;
 }
 
-.form-container input[type=text]{
+.form-container input[type="text"] {
   width: 100%;
   padding: 1rem;
   margin: 1rem 0;
-  border: none;
-  background: #f1f1f1;
+  border-radius: 1rem;
+  background: rgb(178, 211, 238);
+  font-size: 1rem;
 }
 
-.form-container input[type=text]:focus {
-  background-color: #ddd;
+.form-container input[type="text"]:focus {
+  background-color: rgb(48, 141, 218);
   outline: none;
+  color: white;
 }
 
 .form-container .btn {
-  background-color: #04AA6D;
+  background-color: #057c50;
   color: white;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
   width: 100%;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   opacity: 0.8;
+  border-radius: 1rem;
 }
 
 .form-container #btn-cancel {
   background-color: rgb(71, 61, 61);
 }
 
-.form-container .btn:hover{
+.form-container .btn:hover {
   opacity: 1;
 }
