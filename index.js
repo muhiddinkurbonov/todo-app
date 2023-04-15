@@ -54,20 +54,17 @@ function createTodoHtml(item, category, completed) {
 
 function handleItem(event) {
   event.preventDefault();
-  const todos = localStorage.getItem("todos");
-  console.log(typeof todos);
   const itemValue = itemInput.value;
   const categoryValue = categoryInput.value;
-  const newTodoId = todos ? length + 1 : 1;
+  const newTodoId = todosArray.length + 1;
   const newTodo = {
     id: newTodoId,
     todo: itemValue,
     category: categoryValue,
     completed: false,
   };
-  console.log(newTodo);
   todosArray.push(newTodo);
-  console.log(todosArray);
+  console.log(todosArray)
   localStorage.setItem('todos', JSON.stringify(todosArray))
   createTodoHtml(itemValue, categoryValue, false);
   itemInput.value = "";
