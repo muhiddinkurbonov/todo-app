@@ -6,6 +6,7 @@ let incompleteSection = document.getElementById("incomplete-section");
 let completeSection = document.getElementById("complete-section");
 
 const form = document.querySelector(".form-container");
+const btnDelete = document.querySelector(".delete");
 
 let todosArray = JSON.parse(localStorage.getItem("todos")) || [];
 
@@ -25,33 +26,60 @@ function createTodoHtml(todo) {
   const inputCheckbox = document.createElement("input");
   inputCheckbox.setAttribute("type", "checkbox");
   inputCheckbox.checked = todo.completed;
-
-  // Add event listener to the checkbox
-  inputCheckbox.addEventListener("change", (event) => {
-    const todoId = event.target.parentElement.dataset.id;
-    const newTodo = todosArray[todoId - 1];
-    newTodo.completed = !newTodo.completed;
-    localStorage.setItem("todos", JSON.stringify(todosArray));
-    event.target.parentElement.remove();
-    newTodo.completed
-      ? completeSection.appendChild(event.target.parentElement)
-      : incompleteSection.appendChild(event.target.parentElement);
-  });
+  todoCheckboxHtml(inputCheckbox);
 
   todoItem.appendChild(inputCheckbox);
 
+  todoNameAndCategoryHtml(todo, todoItem);
+}
+
+function todoCheckboxHtml(inputCheckbox) {
+  // Add event listener to the checkbox
+  inputCheckbox.addEventListener("change", (event) => {
+    const todoId = event.target.parentElement.dataset.id;
+    console.log(todosArray);
+    todosArray.forEach((todo, i) => {
+      if (todo.id === +todoId) {
+        todo.completed = !todo.completed;
+        event.target.parentElement.remove();
+        todo.completed
+          ? completeSection.appendChild(event.target.parentElement)
+          : incompleteSection.appendChild(event.target.parentElement);
+      }
+    });
+    localStorage.setItem("todos", JSON.stringify(todosArray));
+  });
+}
+function handleDelete(event) {
+  const todoItem = event.target.parentElement.parentElement.parentElement;
+  todosArray.forEach((todo, i) => {
+    if (todo.id === +todoItem.dataset.id) {
+      todosArray.splice(i, 1);
+    }
+  });
+  localStorage.setItem("todos", JSON.stringify(todosArray));
+  todoItem.remove();
+}
+function todoNameAndCategoryHtml(todo, todoItem) {
   const description = document.createElement("div");
   description.setAttribute("class", "description");
   const itemName = document.createElement("p");
   itemName.setAttribute("class", "item-name");
   itemName.innerText = todo.todo;
+
+  const svg = document.createElement("img");
+  svg.setAttribute("src", "./images/trash.svg");
+  svg.setAttribute("class", "delete");
+  itemName.appendChild(svg);
+  svg.addEventListener("click", handleDelete);
+
   const itemCategory = document.createElement("p");
   itemCategory.setAttribute("class", "category");
   itemCategory.innerText = todo.category;
-
   description.appendChild(itemName);
   description.appendChild(itemCategory);
   todoItem.appendChild(description);
+
   todo.completed
     ? completeSection.appendChild(todoItem)
     : incompleteSection.appendChild(todoItem);
@@ -72,7 +100,7 @@ function handleItem(event) {
   };
   todosArray.push(newTodo);
   localStorage.setItem("todos", JSON.stringify(todosArray));
-  console.log(todosArray)
+  console.log(todosArray);
   createTodoHtml(newTodo);
   itemInput.value = "";
   categoryInput.value = "";
@@ -87,8 +115,6 @@ function clearTodos() {
 btnAdd.addEventListener("click", openItemForm);
 btnCancel.addEventListener("click", closeItemForm);
 form.addEventListener("submit", handleItem);
-
-
 
 todosArray.forEach((todo) => {
   createTodoHtml(todo);

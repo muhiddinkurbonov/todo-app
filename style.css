@@ -20,7 +20,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
-  height: 100vh;
+  height: 100%;
 }
 .container {
   opacity: 0.7;
@@ -28,6 +28,7 @@ body {
   z-index: 5;
   padding: 1rem;
   border-radius: 1rem;
+  height: 100vh;
 }
 main {
   display: flex;
@@ -97,7 +98,7 @@ input[type="checkbox"] {
     align-items: center;
   }
   .container {
-    width: min(100%, 350px);
+    width: min(100%, 500px);
     margin: 2rem;
     position: relative;
   }
@@ -166,4 +167,15 @@ input[type="checkbox"] {
 .btnSC {
   display: flex;
   gap: 0.5rem;
+}
+
+
+
+.description {
+  width: 100%;
+}
+
+.item-name {
+  display: flex;
+  justify-content: space-between;
 }
