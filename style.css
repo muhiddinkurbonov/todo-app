@@ -11,6 +11,9 @@ p {
   margin: 0;
   padding: 0;
 }
+#date {
+  color: rgb(64, 250, 250);
+}
 html {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
@@ -33,15 +36,21 @@ body {
 main {
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  margin: 3rem 1rem 1rem 1rem;
 }
 header {
   border-bottom: 1px solid rgb(29, 161, 223);
   margin: 1rem;
 }
-#incomplete,
-#complete {
+
+
+#complete, #incomplete {
   margin-right: 0.3rem;
+}
+
+#complete-section {
+  padding-top: 0.5rem;
+  border-top: 1px solid dodgerblue;
 }
 #status-overall {
   margin: 1rem 0;
@@ -80,8 +89,8 @@ input[type="checkbox"] {
   background-color: dodgerblue;
   align-self: self-end;
   position: absolute;
-  bottom: 2rem;
-  right: 1rem;
+  top: 9rem;
+  right: 1.5rem;
   cursor: pointer;
   transition: all 0.4s;
   position: absolute;
@@ -178,4 +187,16 @@ input[type="checkbox"] {
 .item-name {
   display: flex;
   justify-content: space-between;
+}
+
+.edit, .delete {
+  width: 2rem;
+  cursor: pointer;
+}
+
+.divEditDelete {
+  display: flex;
+  gap: 0.2rem;
+  justify-content: center;
+  align-items: center;
 }
