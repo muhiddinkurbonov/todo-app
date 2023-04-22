@@ -18,6 +18,7 @@
 ## Resources:
 - [100-javascript-project-ideas](https://webtips.dev/100-javascript-project-ideas)
 - [Popup Form](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form)
+- [SVG icons](https://www.svgrepo.com/)
 
 
 Author: [muhiddinkurbonov](https://github.com/muhiddinkurbonov)

@@ -1,4 +1,11 @@
-import { getTodaysDate, updateStats } from "./util.js";
+import {
+  getTodaysDate,
+  updateStats,
+  updateTodo,
+  getTodo,
+  addTodo,
+  getTodos,
+} from "./util.js";
 
 const date = document.getElementById("date");
 date.innerText = getTodaysDate();
@@ -10,14 +17,17 @@ const btnAdd = document.getElementById("btn-add");
 const btnCancel = document.getElementById("btn-cancel");
 const itemForm = document.getElementById("item-form");
 
-let incompleteSection = document.getElementById("incomplete-section");
-let completeSection = document.getElementById("complete-section");
+const incompleteSection = document.getElementById("incomplete-section");
+const completeSection = document.getElementById("complete-section");
 
-const form = document.querySelector(".form-container");
-const btnDelete = document.querySelector(".delete");
+const itemInput = document.getElementById("item-input");
+const categoryInput = document.getElementById("category-input");
 
-let todosArray = JSON.parse(localStorage.getItem("todos")) || [];
-updateStats(todosArray);
+const formAddEdit = document.querySelector(".form-container");
+
+const todos = JSON.parse(localStorage.getItem("todos"));
+let items = todos.items || [];
+
 updateStatsHtml();
 
 function openItemForm() {
@@ -26,82 +36,89 @@ function openItemForm() {
 
 function closeItemForm() {
   itemForm.style.display = "none";
+  itemInput.value = "";
+  categoryInput.value = "";
 }
 
-function createTodoHtml(todo) {
-  const todoItem = document.createElement("div");
-  todoItem.setAttribute("class", "todo");
-  todoItem.setAttribute(`data-id`, todo.id);
+function updateStatsHtml() {
+  updateStats(items);
+  const todos = getTodos();
+  const stats = todos.stats;
+  incomplete.innerText = stats.incompleteCount;
+  complete.innerText = stats.completedCount;
+}
+
+
+function todoCheckboxHtml(inputCheckbox) {
+  inputCheckbox.addEventListener("change", (event) => {
+    const todoId = event.target.parentElement.dataset.id;
+    items.forEach((todo) => {
+      if (todo.id === todoId) {
+        todo.completed = !todo.completed;
+        updateStatsHtml();
+        const currentTodoElement = event.target.parentElement;
+        todo.completed
+          ? completeSection.appendChild(currentTodoElement)
+          : incompleteSection.appendChild(currentTodoElement);
+      }
+    });
+  });
+}
+
+function openEditForm(event) {
+  event.preventDefault();
+  const todoItem =
+    event.target.parentElement.parentElement.parentElement.parentElement;
+  const id = todoItem.dataset.id;
+  openItemForm();
+  const editTodo = getTodo(id, items)[0];
+  itemInput.value = editTodo.todo;
+  categoryInput.value = editTodo.category;
+  itemInput.setAttribute("data-id", id);
+}
+
+function handleDelete(event) {
+  const todoItem =
+    event.target.parentElement.parentElement.parentElement.parentElement;
+  items.forEach((todo, i) => {
+    if (todo.id === todoItem.dataset.id) {
+      items.splice(i, 1);
+    }
+  });
+  localStorage.setItem("todos", JSON.stringify(items));
+  updateStats(items);
+  updateStatsHtml();
+  todoItem.remove();
+}
+
+function renderAllTodos(items) {
+  updateStats(items);
+  updateStatsHtml();
+  items.forEach((item) => renderTodo(item));
+}
+
+function renderTodo(todo) {
+  const todoDiv = document.createElement("div");
+  todoDiv.setAttribute("class", "todo");
+  todoDiv.setAttribute(`data-id`, todo.id);
 
   const inputCheckbox = document.createElement("input");
   inputCheckbox.setAttribute("type", "checkbox");
   inputCheckbox.checked = todo.completed;
   todoCheckboxHtml(inputCheckbox);
 
-  todoItem.appendChild(inputCheckbox);
+  todoDiv.appendChild(inputCheckbox);
 
-  todoNameAndCategoryHtml(todo, todoItem);
-}
-
-function updateStatsHtml() {
-  const {
-    total = 0,
-    incompleteCount = 0,
-    completedCount = 0,
-  } = JSON.parse(localStorage.getItem("stats") || {});
-  console.log(incompleteCount);
-  incomplete.innerText = incompleteCount;
-  complete.innerText = completedCount;
-}
-
-function todoCheckboxHtml(inputCheckbox) {
-  // Add event listener to the checkbox
-  inputCheckbox.addEventListener("change", (event) => {
-    const todoId = event.target.parentElement.dataset.id;
-    console.log(todosArray);
-    todosArray.forEach((todo, i) => {
-      if (todo.id === +todoId) {
-        todo.completed = !todo.completed;
-        event.target.parentElement.remove();
-        todo.completed
-          ? completeSection.appendChild(event.target.parentElement)
-          : incompleteSection.appendChild(event.target.parentElement);
-      }
-    });
-    localStorage.setItem("todos", JSON.stringify(todosArray));
-    updateStats(todosArray);
-    updateStatsHtml();
-  });
-}
-
-function handleEdit(event) {
-}
-
-function handleDelete(event) {
-  console.log(event.target);
-  const todoItem =
-    event.target.parentElement.parentElement.parentElement.parentElement;
-  todosArray.forEach((todo, i) => {
-    if (todo.id === +todoItem.dataset.id) {
-      todosArray.splice(i, 1);
-    }
-  });
-  localStorage.setItem("todos", JSON.stringify(todosArray));
-  updateStats(todosArray);
-  updateStatsHtml();
-  todoItem.remove();
-}
-function todoNameAndCategoryHtml(todo, todoItem) {
   const description = document.createElement("div");
   description.setAttribute("class", "description");
-  const itemName = document.createElement("p");
+  const itemName = document.createElement("div");
   itemName.setAttribute("class", "item-name");
-  itemName.innerText = todo.todo;
+  itemName.innerHTML = `<p>${todo.todo}</p>`
 
   const svgEdit = document.createElement("img");
   svgEdit.setAttribute("src", "./images/edit.svg");
   svgEdit.setAttribute("class", "edit");
-  svgEdit.addEventListener("click", handleEdit);
+  svgEdit.addEventListener("click", openEditForm);
 
   const svgDelete = document.createElement("img");
   svgDelete.setAttribute("src", "./images/delete.svg");
@@ -119,31 +136,38 @@ function todoNameAndCategoryHtml(todo, todoItem) {
   itemCategory.innerText = todo.category;
   description.appendChild(itemName);
   description.appendChild(itemCategory);
-  todoItem.appendChild(description);
+  todoDiv.appendChild(description);
 
   todo.completed
-    ? completeSection.appendChild(todoItem)
-    : incompleteSection.appendChild(todoItem);
+    ? completeSection.appendChild(todoDiv)
+    : incompleteSection.appendChild(todoDiv);
 }
 
-function handleItem(event) {
+function resetTodoHtml() {
+  completeSection.innerText = "";
+  incompleteSection.innerText = "";
+}
+
+function handleAddEditItem(event) {
+  resetTodoHtml();
   event.preventDefault();
+  const todoItem = event.target;
   const itemInput = document.getElementById("item-input");
   const categoryInput = document.getElementById("category-input");
   const itemValue = itemInput.value;
   const categoryValue = categoryInput.value;
-  const newTodoId = todosArray.length + 1;
-  const newTodo = {
-    id: newTodoId,
-    todo: itemValue,
-    category: categoryValue,
-    completed: false,
-  };
-  todosArray.push(newTodo);
-  localStorage.setItem("todos", JSON.stringify(todosArray));
-  updateStats(todosArray);
-  updateStatsHtml();
-  createTodoHtml(newTodo);
+  const id = todoItem.children[2].dataset.id;
+  if (id) {
+    const editTodo = {
+      todo: itemValue,
+      category: categoryValue,
+    };
+    updateTodo(todos, id, editTodo);
+    itemInput.removeAttribute("data-id");
+  } else {
+    addTodo(itemValue, categoryValue, todos);
+  }
+  renderAllTodos(items);
   itemInput.value = "";
   categoryInput.value = "";
   closeItemForm();
@@ -151,8 +175,10 @@ function handleItem(event) {
 
 btnAdd.addEventListener("click", openItemForm);
 btnCancel.addEventListener("click", closeItemForm);
-form.addEventListener("submit", handleItem);
+formAddEdit.addEventListener("submit", handleAddEditItem);
 
-todosArray.forEach((todo) => {
-  createTodoHtml(todo);
+document.addEventListener("DOMContentLoaded", () => {
+  if (items.length > 0) {
+    renderAllTodos(items);
+  }
 });
