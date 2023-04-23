@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
-  <script src="./index.js" defer></script>
+  <script src="./index.js" type="module" defer></script>
   <title>Todo App</title>
 </head>
 
@@ -15,58 +15,32 @@
 
 
     <header>
-      <h1>April 14, 2023</h1>
-      <p id="status-overall"><span id="incomplete">2</span>incomplete, <span id="complete">2</span>completed</p>
+      <h1 id="date"></h1>
+      <p id="status-overall"><span id="incomplete"></span>incomplete, <span id="complete"></span>completed</p>
     </header>
     <main>
+      <h3>Incomplete</h3>
       <section id="incomplete-section">
-        <h3>Incomplete</h3>
-        <div class="todo">
-          <input type="checkbox">
-          <div>
-            <p>Home Assignment</p>
-            <p class="category"><img src="" alt="">School</p>
-          </div>
-        </div>
-        <div class="todo">
-          <input type="checkbox">
-          <div>
-            <p>Walk the dog</p>
-            <p class="category"><img src="" alt="">Home</p>
-          </div>
-        </div>
+
       </section>
+      <h3>Completed</h3>
       <section id="complete-section">
-        <h3>Completed</h3>
-        <div class="todo">
-          <input type="checkbox">
-          <div>
-            <p>Grocery shopping</p>
-            <p class="category"><img src="" alt="">Shopping List</p>
-          </div>
-        </div>
-        <div class="todo">
-          <input type="checkbox">
-          <div>
-            <p>File Tax 2022</p>
-            <p class="category"><img src="" alt="">Finance</p>
-          </div>
-        </div>
-        
+
       </section>
       <button id="btn-add">+</button>
       <div class="form-popup" id="item-form">
         <form class="form-container">
           <h2>Create an item</h2>
-      
-          <label for="item"><b>Item name</b></label>
-          <input type="text" id="item-input" placeholder="Enter item" name="item" required>
-      
-          <label for="category"><b>Item category</b></label>
-          <input type="text" id="category-input" placeholder="Enter category" name="category" required>
-      
-          <button type="submit" class="btn" id="btn-submit">Submit</button>
-          <button type="button" class="btn" id="btn-cancel"">Close</button>
+
+          <label for="item-input"><b>Item name</b></label>
+          <input type="text" id="item-input" placeholder="Enter item" name="item-input" required>
+
+          <label for="category-input"><b>Item category</b></label>
+          <input type="text" id="category-input" placeholder="Enter category" name="category-input" required>
+          <div class="btnSC">
+            <button type="submit" class="btn" id="btn-submit">Submit</button>
+            <button type="button" class="btn" id="btn-cancel"">Close</button>
+        </div>
         </form>
       </div>
     </main>
