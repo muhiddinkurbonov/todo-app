@@ -25,8 +25,8 @@ const categoryInput = document.getElementById("category-input");
 
 const formAddEdit = document.querySelector(".form-container");
 
-const todos = JSON.parse(localStorage.getItem("todos"));
-let items = todos.items || [];
+const todos = JSON.parse(localStorage.getItem("todos")) || {};
+let items = todos?.items || [];
 
 updateStatsHtml();
 
