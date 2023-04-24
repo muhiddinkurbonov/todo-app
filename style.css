@@ -95,7 +95,7 @@ input[type="checkbox"] {
   background-color: dodgerblue;
   align-self: self-end;
   position: absolute;
-  top: 9rem;
+  top: 8rem;
   right: 1.5rem;
   cursor: pointer;
   transition: all 0.4s;
